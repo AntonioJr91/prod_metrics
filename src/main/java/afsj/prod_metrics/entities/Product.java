@@ -13,7 +13,7 @@ public class Product {
    @GeneratedValue(strategy = GenerationType.UUID)
    private UUID id;
 
-   @Column(nullable = false, updatable = false)
+   @Column(unique = true, nullable = false, updatable = false)
    private String name;
 
    @Enumerated(EnumType.STRING)
@@ -28,6 +28,10 @@ public class Product {
       Validations.validateEnum(unitOfMeasure);
       this.name = name;
       this.unitOfMeasure = unitOfMeasure;
+   }
+
+   public static Product create(String name, UnitOfMeasure unitOfMeasure) {
+      return new Product(name, unitOfMeasure);
    }
 
    public UUID getId() {
