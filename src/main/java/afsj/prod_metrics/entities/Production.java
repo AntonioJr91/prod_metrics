@@ -8,6 +8,10 @@ import java.time.YearMonth;
 import java.util.UUID;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {"product_id", "production_period"}
+)
+)
 public class Production {
 
    @Id
@@ -46,6 +50,10 @@ public class Production {
       this.quantity = quantity;
       this.unitPrice = unitPrice;
       this.productionPeriod = productionPeriod;
+   }
+
+   public static Production create(Employee employee, Product product, Double quantity, BigDecimal unitPrice, YearMonth productionPeriod) {
+      return new Production(employee, product, quantity, unitPrice, productionPeriod);
    }
 
    public UUID getId() {
