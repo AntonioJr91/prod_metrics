@@ -4,6 +4,7 @@ import afsj.prod_metrics.exceptions.DomainException;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.YearMonth;
 
 @Entity
@@ -34,6 +35,9 @@ public class Production {
    @Column(nullable = false, updatable = false)
    private YearMonth productionPeriod;
 
+   @Column(nullable = false, updatable = false)
+   private BigDecimal totalPrice;
+
    protected Production() {
    }
 
@@ -49,6 +53,7 @@ public class Production {
       this.quantity = quantity;
       this.unitPrice = unitPrice;
       this.productionPeriod = productionPeriod;
+      this.totalPrice = totalPrice(quantity, unitPrice);
    }
 
    public static Production create(Employee employee, Product product, Double quantity, BigDecimal unitPrice, YearMonth productionPeriod) {
@@ -77,6 +82,17 @@ public class Production {
 
    public YearMonth getProductionPeriod() {
       return productionPeriod;
+   }
+
+   public BigDecimal getTotalPrice() {
+      return totalPrice;
+   }
+
+   private BigDecimal totalPrice(Double quantity, BigDecimal unitPrice) {
+      validateQuantity(quantity);
+      validateUnitPrice(unitPrice);
+      return unitPrice.multiply(BigDecimal.valueOf(quantity))
+              .setScale(2, RoundingMode.UNNECESSARY);
    }
 
    @Override

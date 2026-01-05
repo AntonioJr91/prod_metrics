@@ -13,7 +13,8 @@ public final class ProductionMapper {
               production.getProduct().getUnitOfMeasure(),
               production.getQuantity(),
               production.getUnitPrice(),
-              production.getProductionPeriod()
+              production.getProductionPeriod(),
+              production.getTotalPrice()
       );
    }
 

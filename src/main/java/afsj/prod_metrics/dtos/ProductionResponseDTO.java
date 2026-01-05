@@ -11,6 +11,7 @@ public record ProductionResponseDTO(
         UnitOfMeasure productUnitOfMeasure,
         Double quantity,
         BigDecimal unitPrice,
-        YearMonth productionPeriod
+        YearMonth productionPeriod,
+        BigDecimal totalPrice
 ) {
 }
