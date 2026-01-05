@@ -1,11 +1,10 @@
 package afsj.prod_metrics.entities;
 
 import afsj.prod_metrics.exceptions.DomainException;
-import afsj.prod_metrics.utils.Validations;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.UUID;
 
 @Entity
@@ -30,23 +29,23 @@ public class Production {
    private BigDecimal unitPrice;
 
    @Column(nullable = false, updatable = false)
-   private LocalDate productionMonth;
+   private YearMonth productionPeriod;
 
    protected Production() {
    }
 
-   public Production(Employee employee, Product product, Double quantity, BigDecimal unitPrice, LocalDate productionMonth) {
+   public Production(Employee employee, Product product, Double quantity, BigDecimal unitPrice, YearMonth productionPeriod) {
       validateEmployee(employee);
       validateProduct(product);
       validateQuantity(quantity);
       validateUnitPrice(unitPrice);
-      Validations.validateDate(productionMonth);
+      validateProductionPeriod(productionPeriod);
 
       this.employee = employee;
       this.product = product;
       this.quantity = quantity;
       this.unitPrice = unitPrice;
-      this.productionMonth = productionMonth;
+      this.productionPeriod = productionPeriod;
    }
 
    public UUID getId() {
@@ -69,8 +68,8 @@ public class Production {
       return unitPrice;
    }
 
-   public LocalDate getProductionMonth() {
-      return productionMonth;
+   public YearMonth getProductionPeriod() {
+      return productionPeriod;
    }
 
    @Override
@@ -100,5 +99,9 @@ public class Production {
    private void validateUnitPrice(BigDecimal unitPrice) {
       DomainException.when(unitPrice == null, "UnitPrice is required.");
       DomainException.when(unitPrice.compareTo(BigDecimal.ZERO) <= 0, "UnitPrice must be greater than 0.");
+   }
+
+   private void validateProductionPeriod(YearMonth productionPeriod) {
+      DomainException.when(productionPeriod == null, "Production period is required.");
    }
 }
