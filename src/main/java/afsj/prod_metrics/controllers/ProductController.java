@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -28,7 +26,7 @@ public class ProductController {
    }
 
    @GetMapping("/{id}")
-   public ResponseEntity<ProductResponseDTO> findById(@PathVariable UUID id) {
+   public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
       return ResponseEntity.ok().body(service.findById(id));
    }
 
@@ -39,7 +37,7 @@ public class ProductController {
    }
 
    @DeleteMapping("/{id}")
-   public ResponseEntity<Void> delete(@PathVariable UUID id) {
+   public ResponseEntity<Void> delete(@PathVariable Long id) {
       service.delete(id);
       return ResponseEntity.noContent().build();
    }

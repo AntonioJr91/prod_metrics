@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Service
 public class EmployeeService {
 
@@ -29,7 +27,7 @@ public class EmployeeService {
    }
 
    @Transactional(readOnly = true)
-   public EmployeeResponseDTO findById(UUID id) {
+   public EmployeeResponseDTO findById(Long id) {
       var employee = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not found."));
       return EmployeeMapper.toDto(employee);
    }
@@ -48,7 +46,7 @@ public class EmployeeService {
    }
 
    @Transactional
-   public void delete(UUID id) {
+   public void delete(Long id) {
       if (!repository.existsById(id)) {
          throw new ResourceNotFoundException("Employee not found.");
       }

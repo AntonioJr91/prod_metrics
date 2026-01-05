@@ -5,14 +5,13 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
-import java.util.UUID;
 
 public record ProductionCreateDTO(
         @NotNull
-        UUID employeeId,
+        Long employeeId,
 
         @NotNull
-        UUID productId,
+        Long productId,
 
         @NotNull
         @Positive

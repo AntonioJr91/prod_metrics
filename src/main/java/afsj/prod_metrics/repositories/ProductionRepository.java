@@ -7,9 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.time.YearMonth;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface ProductionRepository extends JpaRepository<Production, UUID> {
+public interface ProductionRepository extends JpaRepository<Production, Long> {
    Optional<Production> findByProductAndProductionPeriod(Product product, YearMonth productionPeriod);
 }

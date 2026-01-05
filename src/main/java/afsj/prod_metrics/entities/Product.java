@@ -4,14 +4,12 @@ import afsj.prod_metrics.enums.UnitOfMeasure;
 import afsj.prod_metrics.utils.Validations;
 import jakarta.persistence.*;
 
-import java.util.UUID;
-
 @Entity
 public class Product {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.UUID)
-   private UUID id;
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
 
    @Column(unique = true, nullable = false, updatable = false)
    private String name;
@@ -34,7 +32,7 @@ public class Product {
       return new Product(name, unitOfMeasure);
    }
 
-   public UUID getId() {
+   public Long getId() {
       return id;
    }
 

@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Service
 public class ProductService {
 
@@ -29,7 +27,7 @@ public class ProductService {
    }
 
    @Transactional(readOnly = true)
-   public ProductResponseDTO findById(UUID id) {
+   public ProductResponseDTO findById(Long id) {
       var product = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found."));
       return ProductMapper.toDto(product);
    }
@@ -46,7 +44,7 @@ public class ProductService {
    }
 
    @Transactional
-   public void delete(UUID id) {
+   public void delete(Long id) {
       if (!repository.existsById(id)) {
          throw new ResourceNotFoundException("Product not found.");
       }

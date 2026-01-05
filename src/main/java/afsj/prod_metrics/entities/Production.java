@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
-import java.util.UUID;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(
@@ -15,8 +14,8 @@ import java.util.UUID;
 public class Production {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.UUID)
-   private UUID id;
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
 
    @ManyToOne(fetch = FetchType.LAZY, optional = false)
    @JoinColumn(name = "employee_id", nullable = false)
@@ -56,7 +55,7 @@ public class Production {
       return new Production(employee, product, quantity, unitPrice, productionPeriod);
    }
 
-   public UUID getId() {
+   public Long getId() {
       return id;
    }
 
