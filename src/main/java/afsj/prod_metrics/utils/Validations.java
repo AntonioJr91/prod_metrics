@@ -2,6 +2,8 @@ package afsj.prod_metrics.utils;
 
 import afsj.prod_metrics.exceptions.DomainException;
 
+import java.time.LocalDate;
+
 public final class Validations {
 
    public static void validateName(String str){
@@ -11,5 +13,9 @@ public final class Validations {
 
    public static void validateEnum(Enum<?> value){
       DomainException.when(value == null, "Enum is required." );
+   }
+
+   public static void validateDate(LocalDate date){
+      DomainException.when(date == null, "Date is required.");
    }
 }

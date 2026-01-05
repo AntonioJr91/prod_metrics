@@ -1,5 +1,7 @@
 package afsj.prod_metrics.entities;
 
+import afsj.prod_metrics.exceptions.DomainException;
+import afsj.prod_metrics.utils.Validations;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -34,6 +36,12 @@ public class Production {
    }
 
    public Production(Employee employee, Product product, Double quantity, BigDecimal unitPrice, LocalDate productionMonth) {
+      validateEmployee(employee);
+      validateProduct(product);
+      validateQuantity(quantity);
+      validateUnitPrice(unitPrice);
+      Validations.validateDate(productionMonth);
+
       this.employee = employee;
       this.product = product;
       this.quantity = quantity;
@@ -74,5 +82,23 @@ public class Production {
    @Override
    public int hashCode() {
       return getClass().hashCode();
+   }
+
+   private void validateEmployee(Employee employee) {
+      DomainException.when(employee == null, "Employee is required.");
+   }
+
+   private void validateProduct(Product product) {
+      DomainException.when(product == null, "Product is required.");
+   }
+
+   private void validateQuantity(Double quantity) {
+      DomainException.when(quantity == null, "Quantity is required.");
+      DomainException.when(quantity <= 0.0, "Quantity must be greater than 0.");
+   }
+
+   private void validateUnitPrice(BigDecimal unitPrice) {
+      DomainException.when(unitPrice == null, "UnitPrice is required.");
+      DomainException.when(unitPrice.compareTo(BigDecimal.ZERO) <= 0, "UnitPrice must be greater than 0.");
    }
 }
