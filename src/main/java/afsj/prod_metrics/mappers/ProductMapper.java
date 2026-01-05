@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 public final class ProductMapper {
 
    public static ProductResponseDTO toDto(Product product) {
-      return new ProductResponseDTO(product.getName(), product.getUnitOfMeasure());
+      return new ProductResponseDTO(product.getId(), product.getName(), product.getUnitOfMeasure());
    }
 
    public static Page<ProductResponseDTO> toDtoList(Page<Product> productPage) {
