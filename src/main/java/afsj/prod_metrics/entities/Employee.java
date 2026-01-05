@@ -59,6 +59,7 @@ public class Employee {
    }
 
    public void setBaseSalary(BigDecimal baseSalary) {
+      validateBaseSalary(baseSalary);
       this.baseSalary = baseSalary;
    }
 
