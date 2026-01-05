@@ -3,6 +3,8 @@ package afsj.prod_metrics.services;
 import afsj.prod_metrics.dtos.ProductCreateDTO;
 import afsj.prod_metrics.dtos.ProductResponseDTO;
 import afsj.prod_metrics.entities.Product;
+import afsj.prod_metrics.exceptions.DuplicateResourceException;
+import afsj.prod_metrics.exceptions.ResourceNotFoundException;
 import afsj.prod_metrics.mappers.ProductMapper;
 import afsj.prod_metrics.repositories.ProductRepository;
 import org.springframework.data.domain.Page;
@@ -28,14 +30,14 @@ public class ProductService {
 
    @Transactional(readOnly = true)
    public ProductResponseDTO findById(UUID id) {
-      var product = repository.findById(id).orElseThrow(IllegalAccessError::new);
+      var product = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found."));
       return ProductMapper.toDto(product);
    }
 
    @Transactional
    public ProductResponseDTO create(ProductCreateDTO dto) {
       repository.findByName(dto.name()).ifPresent(p -> {
-         throw new IllegalArgumentException("Product with this name already exists.");
+         throw new DuplicateResourceException("Product with this name already exists.");
       });
 
       Product productSaved = repository.save(Product.create(dto.name(), dto.unitOfMeasure()));
@@ -46,7 +48,7 @@ public class ProductService {
    @Transactional
    public void delete(UUID id) {
       if (!repository.existsById(id)) {
-         throw new IllegalArgumentException("Product not found.");
+         throw new ResourceNotFoundException("Product not found.");
       }
       repository.deleteById(id);
    }
