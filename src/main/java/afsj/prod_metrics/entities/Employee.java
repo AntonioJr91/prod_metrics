@@ -42,6 +42,10 @@ public class Employee {
       this.admissionDate = admissionDate;
    }
 
+   public static Employee create(String name, String cpf, BigDecimal baseSalary, LocalDate admissionDate){
+      return new Employee(name, cpf, baseSalary, admissionDate);
+   }
+
    public UUID getId() {
       return id;
    }
