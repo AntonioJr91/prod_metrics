@@ -7,7 +7,6 @@ import afsj.prod_metrics.entities.Production;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public final class ProductionMapper {
 
@@ -28,7 +27,7 @@ public final class ProductionMapper {
    }
 
    public static ProductionReportResponseDTO toReportResponseDto(Integer year, Integer month, BigDecimal total,
-                                                                 List<ProductionReportItemDTO> items) {
+                                                                 Page<ProductionReportItemDTO> items) {
       return new ProductionReportResponseDTO(year, month, total, items);
    }
 }

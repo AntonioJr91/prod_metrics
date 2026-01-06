@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
-import java.util.List;
 
 @Service
 public class ProductionService {
@@ -33,15 +32,15 @@ public class ProductionService {
    }
 
    @Transactional(readOnly = true)
-   public ProductionReportResponseDTO findByReport(ProductionFilterDTO dto) {
-      List<ProductionReportItemDTO> items;
+   public ProductionReportResponseDTO findByReport(ProductionFilterDTO dto, Pageable pageable) {
+      Page<ProductionReportItemDTO> items;
 
       if (dto.month() == null) {
-         items = repository.findAnnualReport(dto.year(), dto.productId(), dto.employeeId());
+         items = repository.findAnnualReport(dto.year(), dto.productId(), dto.employeeId(), pageable);
       } else {
          YearMonth period = YearMonth.of(dto.year(), dto.month());
 
-         items = repository.findMonthlyReport(period, dto.productId(), dto.employeeId());
+         items = repository.findMonthlyReport(period, dto.productId(), dto.employeeId(), pageable);
       }
 
       BigDecimal total = items.stream().map(ProductionReportItemDTO::totalPrice)

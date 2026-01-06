@@ -3,13 +3,14 @@ package afsj.prod_metrics.repositories;
 import afsj.prod_metrics.dtos.ProductionReportItemDTO;
 import afsj.prod_metrics.entities.Product;
 import afsj.prod_metrics.entities.Production;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.YearMonth;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -32,10 +33,11 @@ public interface ProductionRepository extends JpaRepository<Production, Long> {
                 AND (:productId IS NULL OR pr.id = :productId)
                 AND (:employeeId IS NULL OR e.id = :employeeId)
            """)
-   List<ProductionReportItemDTO> findAnnualReport(
+   Page<ProductionReportItemDTO> findAnnualReport(
            @Param("year") Integer year,
            @Param("productId") Long productId,
-           @Param("employeeId") Long employeeId
+           @Param("employeeId") Long employeeId,
+           Pageable pageable
    );
 
    @Query("""
@@ -54,9 +56,10 @@ public interface ProductionRepository extends JpaRepository<Production, Long> {
                 AND (:productId IS NULL OR pr.id = :productId)
                 AND (:employeeId IS NULL OR e.id = :employeeId)
            """)
-   List<ProductionReportItemDTO> findMonthlyReport(
+   Page<ProductionReportItemDTO> findMonthlyReport(
            @Param("period") YearMonth period,
            @Param("productId") Long productId,
-           @Param("employeeId") Long employeeId
+           @Param("employeeId") Long employeeId,
+           Pageable pageable
    );
 }
