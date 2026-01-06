@@ -1,8 +1,13 @@
 package afsj.prod_metrics.mappers;
 
+import afsj.prod_metrics.dtos.ProductionReportItemDTO;
+import afsj.prod_metrics.dtos.ProductionReportResponseDTO;
 import afsj.prod_metrics.dtos.ProductionResponseDTO;
 import afsj.prod_metrics.entities.Production;
 import org.springframework.data.domain.Page;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public final class ProductionMapper {
 
@@ -20,5 +25,10 @@ public final class ProductionMapper {
 
    public static Page<ProductionResponseDTO> toDtoList(Page<Production> productionPage) {
       return productionPage.map(ProductionMapper::toDto);
+   }
+
+   public static ProductionReportResponseDTO toReportResponseDto(Integer year, Integer month, BigDecimal total,
+                                                                 List<ProductionReportItemDTO> items) {
+      return new ProductionReportResponseDTO(year, month, total, items);
    }
 }

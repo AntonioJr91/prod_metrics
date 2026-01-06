@@ -1,7 +1,6 @@
 package afsj.prod_metrics.services;
 
-import afsj.prod_metrics.dtos.ProductionCreateDTO;
-import afsj.prod_metrics.dtos.ProductionResponseDTO;
+import afsj.prod_metrics.dtos.*;
 import afsj.prod_metrics.entities.Employee;
 import afsj.prod_metrics.entities.Product;
 import afsj.prod_metrics.entities.Production;
@@ -16,6 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.YearMonth;
+import java.util.List;
+
 @Service
 public class ProductionService {
 
@@ -27,6 +30,24 @@ public class ProductionService {
       this.repository = repository;
       this.employeeRepository = employeeRepository;
       this.productRepository = productRepository;
+   }
+
+   @Transactional(readOnly = true)
+   public ProductionReportResponseDTO findByReport(ProductionFilterDTO dto) {
+      List<ProductionReportItemDTO> items;
+
+      if (dto.month() == null) {
+         items = repository.findAnnualReport(dto.year(), dto.productId(), dto.employeeId());
+      } else {
+         YearMonth period = YearMonth.of(dto.year(), dto.month());
+
+         items = repository.findMonthlyReport(period, dto.productId(), dto.employeeId());
+      }
+
+      BigDecimal total = items.stream().map(ProductionReportItemDTO::totalPrice)
+              .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+      return ProductionMapper.toReportResponseDto(dto.year(), dto.month(), total, items);
    }
 
    @Transactional(readOnly = true)

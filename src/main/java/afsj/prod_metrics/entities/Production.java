@@ -32,7 +32,7 @@ public class Production {
    @Column(nullable = false, updatable = false)
    private BigDecimal unitPrice;
 
-   @Column(nullable = false, updatable = false)
+   @Column(name = "production_period", columnDefinition = "VARCHAR(7)", length = 7, nullable = false, updatable = false)
    private YearMonth productionPeriod;
 
    @Column(nullable = false, updatable = false)
@@ -53,7 +53,7 @@ public class Production {
       this.quantity = quantity;
       this.unitPrice = unitPrice;
       this.productionPeriod = productionPeriod;
-      this.totalPrice = totalPrice(quantity, unitPrice);
+      this.totalPrice = setTotalPrice(quantity, unitPrice);
    }
 
    public static Production create(Employee employee, Product product, Double quantity, BigDecimal unitPrice, YearMonth productionPeriod) {
@@ -88,7 +88,7 @@ public class Production {
       return totalPrice;
    }
 
-   private BigDecimal totalPrice(Double quantity, BigDecimal unitPrice) {
+   private BigDecimal setTotalPrice(Double quantity, BigDecimal unitPrice) {
       validateQuantity(quantity);
       validateUnitPrice(unitPrice);
       return unitPrice.multiply(BigDecimal.valueOf(quantity))

@@ -1,8 +1,11 @@
 package afsj.prod_metrics.controllers;
 
 import afsj.prod_metrics.dtos.ProductionCreateDTO;
+import afsj.prod_metrics.dtos.ProductionFilterDTO;
+import afsj.prod_metrics.dtos.ProductionReportResponseDTO;
 import afsj.prod_metrics.dtos.ProductionResponseDTO;
 import afsj.prod_metrics.services.ProductionService;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,11 @@ public class ProductionController {
 
    public ProductionController(ProductionService service) {
       this.service = service;
+   }
+
+   @GetMapping("/reports")
+   public ResponseEntity<ProductionReportResponseDTO> findByReport(ProductionFilterDTO dto) {
+      return ResponseEntity.ok().body(service.findByReport(dto));
    }
 
    @GetMapping
