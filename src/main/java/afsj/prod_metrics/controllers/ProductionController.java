@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/productions")
+@RequestMapping("/api/productions")
 public class ProductionController {
 
    private final ProductionService service;

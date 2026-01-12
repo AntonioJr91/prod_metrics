@@ -23,6 +23,6 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://db:3306/appdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
             - name: SPRING_DATASOURCE_USERNAME
-              value: root
+              value: app
             - name: SPRING_DATASOURCE_PASSWORD
-              value: root
+              value: app
