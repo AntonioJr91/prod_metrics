@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 public final class EmployeeMapper {
 
    public static EmployeeResponseDTO toDto(Employee employee) {
-      return new EmployeeResponseDTO(employee.getName(), employee.getCpf(),
+      return new EmployeeResponseDTO(employee.getId(), employee.getName(), employee.getCpf(),
               employee.getBaseSalary(), employee.getAdmissionDate());
    }
 

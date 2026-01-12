@@ -55,4 +55,10 @@ public class GlobalExceptionHandler {
       );
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
    }
+
+   @ExceptionHandler(Throwable.class)
+   public ResponseEntity<String> handle(Throwable ex) {
+      ex.printStackTrace(); // propositalmente explícito
+      return ResponseEntity.status(500).body(ex.getMessage());
+   }
 }

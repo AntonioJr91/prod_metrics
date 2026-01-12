@@ -9,7 +9,7 @@ import java.time.YearMonth;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(
-        columnNames = {"product_id", "production_period"}
+        columnNames = {"employee_id", "product_id", "production_period"}
 )
 )
 public class Production {

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record EmployeeResponseDTO(
+        Long id,
         String name,
         String cpf,
         BigDecimal baseSalary,

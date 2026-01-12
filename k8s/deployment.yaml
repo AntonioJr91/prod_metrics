@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: learning-kube
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: learning-kube
+  template:
+    metadata:
+      labels:
+        app: learning-kube
+    spec:
+      containers:
+        - name: learning-kube
+          image: antoniojr91/learning-kube:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: dev
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://db:3306/appdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: root

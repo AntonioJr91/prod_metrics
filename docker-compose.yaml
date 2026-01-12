@@ -1,6 +1,8 @@
+version: "3.9"
+
 services:
   api:
-    container_name: prod_metrics
+    container_name: api_prod_metrics
     build: .
     ports:
       - "8080:8080"
